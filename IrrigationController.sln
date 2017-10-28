@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrrigationController", "IrrigationController\IrrigationController.csproj", "{57FC9C47-6C09-4F42-BE1F-758284F22D3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|ARM.Build.0 = Debug|ARM
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|ARM.Deploy.0 = Debug|ARM
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|x64.ActiveCfg = Debug|x64
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|x64.Build.0 = Debug|x64
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|x64.Deploy.0 = Debug|x64
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|x86.ActiveCfg = Debug|x86
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|x86.Build.0 = Debug|x86
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Debug|x86.Deploy.0 = Debug|x86
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|ARM.ActiveCfg = Release|ARM
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|ARM.Build.0 = Release|ARM
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|ARM.Deploy.0 = Release|ARM
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|x64.ActiveCfg = Release|x64
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|x64.Build.0 = Release|x64
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|x64.Deploy.0 = Release|x64
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|x86.ActiveCfg = Release|x86
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|x86.Build.0 = Release|x86
+		{57FC9C47-6C09-4F42-BE1F-758284F22D3A}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E4CE1436-3ABE-4125-9026-2033BECF7CCD}
+	EndGlobalSection
+EndGlobal
