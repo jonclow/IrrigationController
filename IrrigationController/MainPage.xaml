@@ -8,6 +8,23 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <TextBlock x:Name="pageTitle" Text="Irrigation Controller" />
+        <HyperlinkButton Content="Valve Control" Click="ValveControlButton_Click" 
+                         HorizontalAlignment="Left" Margin="79,160,0,0" 
+                         VerticalAlignment="Top" 
+                         Height="156" Width="320" 
+                         BorderBrush="Black" 
+                         BorderThickness="2"
+                         Background="LawnGreen"/>
+        <HyperlinkButton Content="Schedule Control" Click="ScheduleControlButton_Click" 
+                         HorizontalAlignment="Left" 
+                         Margin="79,399,0,0" 
+                         VerticalAlignment="Top" 
+                         Height="156" 
+                         Width="320" 
+                         BorderBrush="Black" 
+                         BorderThickness="2"
+                         Background="Orange"/>
+        <TextBox HorizontalAlignment="Left" Margin="559,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="395" Width="401" BorderBrush="Black" BorderThickness="2"/>
     </Grid>
 </Page>

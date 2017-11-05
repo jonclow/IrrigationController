@@ -12,31 +12,19 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Devices.Gpio;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace IrrigationController
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class ScheduleControl : Page
     {
-        public MainPage()
+        public ScheduleControl()
         {
             this.InitializeComponent();
-     
-        }
-
-        private void ValveControlButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ValveControl));
-        }
-
-        private void ScheduleControlButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ScheduleControl));
         }
     }
 }
