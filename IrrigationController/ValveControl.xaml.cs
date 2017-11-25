@@ -157,7 +157,7 @@ namespace IrrigationController
                 }
             }
             */
-            
+
         }
 
         private void makeTheSwitches(string whichArea, DispatcherTimer timer, GpioPin pin, Button button)
@@ -180,7 +180,7 @@ namespace IrrigationController
             else
             {
                 // We just closed the valve, but there may be a timer running if we closed it before the duration finished.
-                if (timer.IsEnabled)
+                if (timer !== null && timer.IsEnabled)
                 {
                     timer.Stop();
                 }

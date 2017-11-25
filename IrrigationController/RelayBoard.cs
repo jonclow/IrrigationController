@@ -62,10 +62,10 @@ namespace IrrigationController
             }
 
             /*
-                 * Initialize the area solenoid drives and set to "off"
+                 * Initialize the area solenoid drives
                  *
                  * Instantiate the relevant pin object
-                 * Write the GPIO pin value of low on the pin
+                 *
                  * Set the GPIO pin drive mode to output
                  */
             HerbPin = gpio.OpenPin(HERB_PIN, GpioSharingMode.Exclusive);
@@ -107,7 +107,7 @@ namespace IrrigationController
                         return true;
                         //return ("Relay is on!");
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
