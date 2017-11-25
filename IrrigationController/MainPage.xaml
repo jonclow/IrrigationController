@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="800" Height="480">
         <TextBlock x:Name="pageTitle" Text="Irrigation Controller" />
         <HyperlinkButton Content="Valve Control" Click="ValveControlButton_Click" 
-                         HorizontalAlignment="Left" Margin="79,160,0,0" 
+                         HorizontalAlignment="Left" Margin="35,52,0,0" 
                          VerticalAlignment="Top" 
                          Height="156" Width="320" 
                          BorderBrush="Black" 
@@ -18,13 +18,13 @@
                          Background="LawnGreen"/>
         <HyperlinkButton Content="Schedule Control" Click="ScheduleControlButton_Click" 
                          HorizontalAlignment="Left" 
-                         Margin="79,399,0,0" 
+                         Margin="35,285,0,0" 
                          VerticalAlignment="Top" 
                          Height="156" 
                          Width="320" 
                          BorderBrush="Black" 
                          BorderThickness="2"
                          Background="Orange"/>
-        <TextBox HorizontalAlignment="Left" Margin="559,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="395" Width="401" BorderBrush="Black" BorderThickness="2"/>
+        <TextBox HorizontalAlignment="Left" Margin="399,52,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="389" Width="373" BorderBrush="Black" BorderThickness="2"/>
     </Grid>
 </Page>

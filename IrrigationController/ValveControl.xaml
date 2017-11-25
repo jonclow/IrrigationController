@@ -7,80 +7,69 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel HorizontalAlignment="Left" Height="90" Margin="750,30,0,0" VerticalAlignment="Top" Width="210" Orientation="Horizontal">
-            <Button Content="Home"  Margin="0,29,10,10.4" Height="51" Width="85"/>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="800" Height="480">
+        <StackPanel HorizontalAlignment="Left" Height="90" Margin="580,20,0,0" VerticalAlignment="Top" Width="210" Orientation="Horizontal">
+            <Button Content="Home"  Margin="0,29,10,10" Height="51" Width="85"/>
             <Button Content="Schedule" Margin="0,29,10,10.4" Height="51" Width="90"/>
 
         </StackPanel>
-        <Button Content="Herbs" 
-                Click="OrchardButton_Click"
+        <StackPanel HorizontalAlignment="Left" Height="147" Margin="62,258,0,0" VerticalAlignment="Top" Width="620" Orientation="Horizontal">
+            <Button Content="Herbs" 
+                Name="Herbs"
+                Click="HerbsButton_Click"
                 HorizontalAlignment="Left" 
-                Margin="80,170,0,0" 
+                Margin="20,10,0,0" 
                 VerticalAlignment="Top" 
                 BorderBrush="Black" 
-                BorderThickness="2" 
-                Height="160" 
-                Width="170"/>
-        <Button Content="Orchard" 
+                BorderThickness="2"
+                Background="Red"
+                Height="120" 
+                Width="130"/>
+            <Button Content="Orchard" 
+                Name="Orchard"
                 Click="OrchardButton_Click"
                 HorizontalAlignment="Left"
-                Margin="320,170,0,0" 
+                Margin="20,10,0,0" 
                 VerticalAlignment="Top" 
                 BorderBrush="Black" 
-                BorderThickness="2" 
-                Height="160" 
-                Width="170"/>
-        <Button Content="Tunnel House" 
+                BorderThickness="2"
+                Background="Red"
+                Height="120" 
+                Width="130"/>
+            <Button Content="Tunnel House"
+                Name="TunnelHouse"
                 Click="TunnelHouseButton_Click"
                 HorizontalAlignment="Left" 
-                Margin="565,170,0,0" 
+                Margin="20,10,0,0" 
                 VerticalAlignment="Top" 
                 BorderBrush="Black" 
-                BorderThickness="2" 
-                Height="160" 
-                Width="170"/>
-        <Button Content="Garden" 
+                BorderThickness="2"
+                Background="Red"
+                Height="120" 
+                Width="130"/>
+            <Button Content="Garden" 
+                Name="Garden"
                 Click="GardenButton_Click"
                 HorizontalAlignment="Left" 
-                Margin="790,170,0,0" 
+                Margin="20,10,0,0" 
                 VerticalAlignment="Top" 
                 BorderBrush="Black" 
-                BorderThickness="2" 
-                Height="160" 
-                Width="170"/>
-        <StackPanel HorizontalAlignment="Left" Height="135" Margin="80,365,0,0" VerticalAlignment="Top" Width="880">
+                BorderThickness="2"
+                Background="Red"
+                Height="120" 
+                Width="130"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Height="99" Margin="32,115,0,0" VerticalAlignment="Top" Width="718">
             <TextBlock Text="Select Irrigation Duration - Minutes" Margin="0,25,0,0"/>
-            <Slider Width="880" Height="100"
+            <Slider Height="58"
                     x:Name="durationSlider"
                     Maximum="60"
-                    Minimum="0"
+                    Minimum="5"
                     TickFrequency="5"
                     SnapsTo="Ticks"
                     TickPlacement="BottomRight"
-                    ValueChanged="durationSlider_ValueChanged">
-            </Slider>
-            <TextBlock x:Name="durationValue" Margin="0,0,0,10" Text="Current value: 0" />
+                    ValueChanged="durationSlider_ValueChanged"/>
+            <TextBlock x:Name="durationValue" Margin="0,0,0,10" Text="Current value: 5" />
         </StackPanel>
-        <Button Content="Start" 
-                Click="IrrigationStopButton_Click"
-                HorizontalAlignment="Left" 
-                Margin="155,530,0,0" 
-                VerticalAlignment="Top" 
-                Height="70" 
-                Width="240" 
-                BorderBrush="Black" 
-                BorderThickness="2" 
-                Background="Green"/>
-        <Button Content="Stop" 
-                Click="IrrigationStopButton_Click"
-                HorizontalAlignment="Left" 
-                Margin="620,530,0,0" 
-                VerticalAlignment="Top" 
-                Height="70" 
-                Width="240" 
-                BorderBrush="Black" 
-                BorderThickness="2" 
-                Background="Red"/>
     </Grid>
 </Page>
