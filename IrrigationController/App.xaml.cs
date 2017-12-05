@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
+using Windows.Devices.Gpio;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,6 +24,14 @@ namespace IrrigationController
     /// </summary>
     sealed partial class App : Application
     {
+        public Dictionary<string, bool> valveState = new Dictionary<string, bool>();
+        public RelayBoard RelayBoard = new RelayBoard();
+        public Schedule[] schedules = new Schedule[3];
+
+        private DispatcherTimer timer;
+        private TimeSpan schedCheck = new TimeSpan(0, 1, 0);
+
+
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -31,6 +41,136 @@ namespace IrrigationController
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            for (int sched = 0; sched < 3; sched++)
+            {
+                schedules[sched] = new Schedule(false, sched+1);
+            }
+
+            Array.Sort(schedules);
+
+            timer = new DispatcherTimer();
+            timer.Interval = schedCheck;
+            timer.Start();
+            timer.Tick += Timer_Tick;
+
+            if (!RelayBoard.Available)
+            {
+                RelayBoard.Begin();
+            }
+
+            valveState.Add("Herbs", false);
+            valveState.Add("Orchard", false);
+            valveState.Add("TunnelHouse", false);
+            valveState.Add("Garden", false);
+
+
+            // TODO: build out service to run in background task to check Azure IoT Hubb messaging
+            var builder = new BackgroundTaskBuilder
+            {
+                Name = "Hub Messaging"
+            };
+            builder.SetTrigger(new TimeTrigger(15, false));
+            // Do not set builder.TaskEntryPoint for in-process background tasks
+            // Here we register the task and work will start based on the time trigger.
+            BackgroundTaskRegistration task = builder.Register();
+
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            DateTime present = DateTime.Now;
+            List<string> tempTargets = new List<string>();
+            foreach(Schedule sched in schedules)
+            {
+                if (sched.IsSet)
+                {
+                    if (present >= sched.SchedStart)
+                    {
+                        sched.SchedStart.AddDays(sched.SchedInterval);
+                        foreach (string target in sched.targetAreas)
+                        {
+                            string where = target;
+                            switch(where)
+                            {
+                                case "herbs":
+                                    valveState["Herbs"] = RelayBoard.SwitchRelay(RelayBoard.HerbPin);
+                                    tempTargets.Add(where);
+                                    break;
+
+                                case "orchard":
+                                    valveState["Orchard"] = RelayBoard.SwitchRelay(RelayBoard.OrchardPin);
+                                    tempTargets.Add(where);
+                                    break;
+
+                                case "tunnelhouse":
+                                    valveState["TunnelHouse"] = RelayBoard.SwitchRelay(RelayBoard.TunnelHousePin);
+                                    tempTargets.Add(where);
+                                    break;
+
+                                case "garden":
+                                    valveState["Garden"] = RelayBoard.SwitchRelay(RelayBoard.GardenPin);
+                                    tempTargets.Add(where);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                        }
+
+                        DispatcherTimer watering = new DispatcherTimer();
+                        watering.Interval = new TimeSpan(0, sched.WaterDuration, 0);
+
+                        watering.Start();
+
+                        watering.Tick += (s, ev) =>
+                        {
+                            watering.Stop();
+                            // If the valve is closed - dont re-open it.  The timer.tick should only close a valve.
+                            // The valve may have been manually closed after the timer was started
+                            foreach (string target in tempTargets)
+                            {
+                                string where = target;
+                                switch (where)
+                                {
+                                    case "herbs":
+                                        if (valveState["Herbs"])
+                                        {
+                                            valveState["Herbs"] = RelayBoard.SwitchRelay(RelayBoard.HerbPin);
+                                        }
+                                        break;
+
+                                    case "orchard":
+                                        if (valveState["Orchard"])
+                                        {
+                                            valveState["Orchard"] = RelayBoard.SwitchRelay(RelayBoard.OrchardPin);
+                                        }
+                                        break;
+
+                                    case "tunnelhouse":
+                                        if (valveState["TunnelHouse"])
+                                        {
+                                            valveState["TunnelHouse"] = RelayBoard.SwitchRelay(RelayBoard.TunnelHousePin);
+                                        }
+                                        break;
+
+                                    case "garden":
+                                        if (valveState["Garden"])
+                                        {
+                                            valveState["Garden"] = RelayBoard.SwitchRelay(RelayBoard.GardenPin);
+                                        }
+                                        break;
+
+                                    default:
+                                        break;
+
+                                }
+                            }
+                        };
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -97,5 +237,18 @@ namespace IrrigationController
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+            base.OnBackgroundActivated(args);
+            IBackgroundTaskInstance taskInstance = args.TaskInstance;
+
+            if(taskInstance.Task.Name == "Hub Messaging")
+            {
+                
+            }
+            //DoYourBackgroundWork(taskInstance);
+        }
+
     }
 }

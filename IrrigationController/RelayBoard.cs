@@ -10,14 +10,14 @@ namespace IrrigationController
     public sealed class RelayBoard
     {
         // Relay Control Pins
-        private const int HERB_PIN = 6;
-        private const int ORCHARD_PIN = 5;
+        private const int HERB_PIN = 5;
+        private const int ORCHARD_PIN = 6;
         private const int TUNNEL_HOUSE_PIN = 13;
-        private const int GARDEN_PIN = 26;
+        private const int GARDEN_PIN = 19;
 
         // Control Flags
-        private bool available = false;
-        private bool enable = false;
+        private bool available;
+        private bool enable;
 
         /// <summary>
         /// Relay switch control pins for the relevant areas solenoid valve
@@ -31,16 +31,21 @@ namespace IrrigationController
         public GpioPin OrchardPin { get; private set; }
         public GpioPin TunnelHousePin { get; private set; }
         public GpioPin GardenPin { get; private set; }
+        public bool Available { get => available; set => available = value; }
+        public bool Enable { get => enable; set => enable = value; }
 
         public void Begin()
         {
-            /*
-                 * Acquire the GPIO controller
-                 * MSDN GPIO Reference: https://msdn.microsoft.com/en-us/library/windows/apps/windows.devices.gpio.aspx
-                 * 
-                 * Get the default GpioController
-                 */
-            GpioController gpio = GpioController.GetDefault();
+            // Default the control flags
+            Available = false;
+            Enable = false;
+        /*
+             * Acquire the GPIO controller
+             * MSDN GPIO Reference: https://msdn.microsoft.com/en-us/library/windows/apps/windows.devices.gpio.aspx
+             * 
+             * Get the default GpioController
+             */
+        GpioController gpio = GpioController.GetDefault();
 
             /*
              * Test to see if the GPIO controller is available.
@@ -56,8 +61,8 @@ namespace IrrigationController
              */
             if (null == gpio)
             {
-                available = false;
-                enable = false;
+                Available = false;
+                Enable = false;
                 return;
             }
 
@@ -84,14 +89,14 @@ namespace IrrigationController
             //GardenPin.Write(GpioPinValue.Low);
             GardenPin.SetDriveMode(GpioPinDriveMode.Output);
 
-            available = true;
-            enable = true;
+            Available = true;
+            Enable = true;
 
         }
 
         public bool SwitchRelay(GpioPin pinIdent)
         {
-            if(available)
+            if(Available)
             {
                 try
                 {

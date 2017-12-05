@@ -8,6 +8,50 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel HorizontalAlignment="Left" Height="600" Margin="10,20,0,20" Width="1004" Orientation="Horizontal">
+            <StackPanel x:Name="scheduleOne" HorizontalAlignment="Left" Height="560" Margin="10,20,0,0" VerticalAlignment="Top" Width="248">
+                <Button x:Name="IrrigationSched1" Content="Schedule One" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" Click="scheduleSelect"/>
+                <Button x:Name="IrrigationSched2" Content="Schedule Two" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" Click="scheduleSelect"/>
+                <Button x:Name="IrrigationSched3" Content="Schedule Three" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" Click="scheduleSelect"/>
+                <Button x:Name="schedSet" Content="SET" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,25,10,10" Height="60" Background="GreenYellow" Click="scheduleSet"/>
+                <Button x:Name="schedCancel" Content="CANCEL" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,25,10,10" Height="60" Background="OrangeRed" Click="scheduleCancel"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Height="560" Margin="10,20,0,0" VerticalAlignment="Top" Width="223">
+                <TextBox Text="Select Areas" Margin="0,10,0,10"/>
+                <CheckBox x:Name="Herbs" Content="Herbs" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <CheckBox x:Name="Orchard" Content="Orchard" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <CheckBox x:Name="TunnelHouse" Content="Tunnel House" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <CheckBox x:Name="Garden" Content="Garden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Height="560" Margin="10,20,0,0" VerticalAlignment="Top" Width="477">
+                <TextBox Text="Set Start Time" Margin="0,10,0,5"/>
+                <TimePicker x:Name="timeStart" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            ClockIdentifier="24HourClock"
+                            MinuteIncrement="15"
+                            TimeChanged="setTime"/>
+                <TextBlock Text="Select Irrigation Duration - Minutes" Margin="0,25,0,0"/>
+                <Slider Height="58"
+                    x:Name="durationSlider"
+                    Maximum="60"
+                    Minimum="5"
+                    TickFrequency="5"
+                    SnapsTo="Ticks"
+                    TickPlacement="BottomRight"
+                    ValueChanged="durationSlider_ValueChanged"/>
+                <TextBlock Text="Set repeat frequency - Days" Margin="0,25,0,0"/>
+                <Slider Height="58"
+                    x:Name="frequencySlider"
+                    Maximum="8"
+                    Minimum="1"
+                    TickFrequency="1"
+                    SnapsTo="Ticks"
+                    TickPlacement="BottomRight" Value="1" ValueChanged="frequencySlider_ValueChanged" />
+
+            </StackPanel>
+        </StackPanel>
 
     </Grid>
 </Page>

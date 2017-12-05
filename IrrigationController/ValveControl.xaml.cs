@@ -34,136 +34,79 @@ namespace IrrigationController
         DateTimeOffset time;
         DateTimeOffset startTime;
         DateTimeOffset lastTime;
+        private App appObj;
 
 
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush greenBrush = new SolidColorBrush(Windows.UI.Colors.Green);
 
-        public Dictionary<string, bool> valveState = new Dictionary<string, bool>();
+        //public Dictionary<string, bool> valveState = new Dictionary<string, bool>();
 
-        private RelayBoard RelayBoard = new RelayBoard();
+        //private RelayBoard RelayBoard = new RelayBoard();
 
         private int _irrigateDuration;
-
-        public int IrrigateDuration { get => _irrigateDuration; set => _irrigateDuration = value; }
+    
+        public int IrrigateDuration { get => _irrigateDuration; set => _irrigateDuration = value; }  
 
         public ValveControl()
         {
             this.InitializeComponent();
+            appObj = App.Current as App;
 
-            RelayBoard.Begin();
-           
-            valveState.Add("Herbs", false);
-            valveState.Add("Orchard", false);
-            valveState.Add("TunnelHouse", false);
-            valveState.Add("Garden", false);
+            if(!appObj.RelayBoard.Available)
+            {
+                appObj.RelayBoard.Begin();
+            }
+
+            Herbs.Background = SetButtonColour("Herbs");
+            Orchard.Background = SetButtonColour("Orchard");
+            TunnelHouse.Background = SetButtonColour("TunnelHouse");
+            Garden.Background = SetButtonColour("Garden");
+
         }
 
         private void HerbsButton_Click(object sender, RoutedEventArgs e)
         {
-            valveState["Herbs"] = RelayBoard.SwitchRelay(RelayBoard.HerbPin);
+            //var appObj = App.Current as App;
+            appObj.valveState["Herbs"] = appObj.RelayBoard.SwitchRelay(appObj.RelayBoard.HerbPin);
             Herbs.Background = SetButtonColour("Herbs");
 
-            makeTheSwitches("Herbs", herbTimer, RelayBoard.HerbPin, Herbs);
+            makeTheSwitches("Herbs", herbTimer, appObj.RelayBoard.HerbPin, Herbs);
 
-            /*
-            herbTimer = new DispatcherTimer();
-            herbTimer.Interval = new TimeSpan(0, IrrigateDuration, 0);
-
-            herbTimer.Start();
-
-            herbTimer.Tick += (s, ev) =>
-            {
-                herbTimer.Stop();
-                valveState["Herbs"] = RelayBoard.SwitchRelay(RelayBoard.HerbPin);
-                Herbs.Background = SetButtonColour("Herbs");
-            };
-            */
         }
 
         private void OrchardButton_Click(object sender, RoutedEventArgs e)
         {
-            valveState["Orchard"] = RelayBoard.SwitchRelay(RelayBoard.OrchardPin);
+            //var appObj = App.Current as App;
+            appObj.valveState["Orchard"] = appObj.RelayBoard.SwitchRelay(appObj.RelayBoard.OrchardPin);
             Orchard.Background = SetButtonColour("Orchard");
 
-            makeTheSwitches("Orchard", orchardTimer, RelayBoard.OrchardPin, Orchard);
+            makeTheSwitches("Orchard", orchardTimer, appObj.RelayBoard.OrchardPin, Orchard);
 
-            /*
-            orchardTimer = new DispatcherTimer();
-            orchardTimer.Interval = new TimeSpan(0, IrrigateDuration, 0);
-
-            orchardTimer.Start();
-
-            orchardTimer.Tick += (s, ev) =>
-            {
-                orchardTimer.Stop();
-                valveState["Orchard"] = RelayBoard.SwitchRelay(RelayBoard.OrchardPin);
-                Herbs.Background = SetButtonColour("Orchard");
-            };
-            */
         }
 
         private void TunnelHouseButton_Click(object sender, RoutedEventArgs e)
         {
-            valveState["TunnelHouse"] = RelayBoard.SwitchRelay(RelayBoard.TunnelHousePin);
+            appObj.valveState["TunnelHouse"] = appObj.RelayBoard.SwitchRelay(appObj.RelayBoard.TunnelHousePin);
             TunnelHouse.Background = SetButtonColour("TunnelHouse");
 
-            makeTheSwitches("TunnelHouse", tunnelHouseTimer, RelayBoard.TunnelHousePin, TunnelHouse);
+            makeTheSwitches("TunnelHouse", tunnelHouseTimer, appObj.RelayBoard.TunnelHousePin, TunnelHouse);
 
-            /*
-            tunnelHouseTimer = new DispatcherTimer();
-            tunnelHouseTimer.Interval = new TimeSpan(0, IrrigateDuration, 0);
-
-            tunnelHouseTimer.Start();
-
-            tunnelHouseTimer.Tick += (s, ev) =>
-            {
-                tunnelHouseTimer.Stop();
-                valveState["TunnelHouse"] = RelayBoard.SwitchRelay(RelayBoard.TunnelHousePin);
-                Herbs.Background = SetButtonColour("TunnelHouse");
-            };
-            */
         }
 
         private void GardenButton_Click(object sender, RoutedEventArgs e)
         {
-            valveState["Garden"] = RelayBoard.SwitchRelay(RelayBoard.GardenPin);
+            appObj.valveState["Garden"] = appObj.RelayBoard.SwitchRelay(appObj.RelayBoard.GardenPin);
             Garden.Background = SetButtonColour("Garden");
 
-            makeTheSwitches("Garden", gardenTimer, RelayBoard.GardenPin, Garden);
-
-            // Check if the valve is open - if so, start timer to then close it.
-            /*
-            if (valveState["Garden"])
-            {
-                gardenTimer = new DispatcherTimer();
-                gardenTimer.Interval = new TimeSpan(0, IrrigateDuration, 0);
-
-                gardenTimer.Start();
-
-                gardenTimer.Tick += (s, ev) =>
-                {
-                    gardenTimer.Stop();
-                    valveState["Garden"] = RelayBoard.SwitchRelay(RelayBoard.GardenPin);
-                    Herbs.Background = SetButtonColour("Garden");
-                };
-            }
-            else
-            {
-                // We just closed the valve, but there may be a timer running if we closed it before the duration finished.
-                if (gardenTimer.IsEnabled)
-                {
-                    gardenTimer.Stop();
-                }
-            }
-            */
+            makeTheSwitches("Garden", gardenTimer, appObj.RelayBoard.GardenPin, Garden);
 
         }
 
         private void makeTheSwitches(string whichArea, DispatcherTimer timer, GpioPin pin, Button button)
         {
             // Check if the valve is open - if so, start timer to then close it.
-            if (valveState[whichArea])
+            if (appObj.valveState[whichArea])
             {
                 timer = new DispatcherTimer();
                 timer.Interval = new TimeSpan(0, IrrigateDuration, 0);
@@ -173,14 +116,20 @@ namespace IrrigationController
                 timer.Tick += (s, ev) =>
                 {
                     timer.Stop();
-                    valveState[whichArea] = RelayBoard.SwitchRelay(pin);
-                    button.Background = SetButtonColour(whichArea);
+                    // If the valve is closed - dont re-open it.  The timer.tick should only close a valve (valveState = true).
+                    // The valve may have been manually closed after the timer was started
+                    if (appObj.valveState[whichArea])
+                    {
+                        appObj.valveState[whichArea] = appObj.RelayBoard.SwitchRelay(pin);
+                        button.Background = SetButtonColour(whichArea);
+                    }
+                    
                 };
             }
             else
             {
                 // We just closed the valve, but there may be a timer running if we closed it before the duration finished.
-                if (timer !== null && timer.IsEnabled)
+                if (timer != null && timer.IsEnabled)
                 {
                     timer.Stop();
                 }
@@ -196,7 +145,7 @@ namespace IrrigationController
 
         private SolidColorBrush SetButtonColour(string button)
         {
-            if (valveState[button])
+            if (appObj.valveState[button])
             {
                 return greenBrush;
             }

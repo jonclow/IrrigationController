@@ -26,7 +26,12 @@ namespace IrrigationController
         public MainPage()
         {
             this.InitializeComponent();
-     
+            var appObj = App.Current as App;
+
+            if (!appObj.RelayBoard.Available)
+            {
+                appObj.RelayBoard.Begin();
+            }
         }
 
         private void ValveControlButton_Click(object sender, RoutedEventArgs e)
