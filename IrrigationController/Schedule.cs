@@ -14,7 +14,7 @@ namespace IrrigationController
         private int id;
 
         // The date and time to start - the date will increment forward on the interval
-        private DateTimeOffset schedStart;
+        private DateTime schedStart;
 
         // Days between scheduled irrigation events
         private double schedInterval;
@@ -31,7 +31,7 @@ namespace IrrigationController
             this.id = id;
         }
 
-        public DateTimeOffset SchedStart { get => schedStart; set => schedStart = value; }
+        public DateTime SchedStart { get => schedStart; set => schedStart = value; }
         public int WaterDuration { get => waterDuration; set => waterDuration = value; }
         public double SchedInterval { get => schedInterval; set => schedInterval = value; }
         public bool IsSet { get => isSet; set => isSet = value; }
@@ -39,8 +39,8 @@ namespace IrrigationController
 
         public void setSchedStart(TimeSpan userSelectedStart)
         {
-            DateTime start = new DateTime();
-            SchedStart = new DateTimeOffset(start, userSelectedStart);
+            DateTime start = DateTime.Today;
+            SchedStart = start.Add(userSelectedStart);
 
         }
 

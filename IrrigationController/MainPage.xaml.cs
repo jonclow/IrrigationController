@@ -23,6 +23,8 @@ namespace IrrigationController
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private SolidColorBrush blueVioletBrush = new SolidColorBrush(Windows.UI.Colors.BlueViolet);
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -32,6 +34,16 @@ namespace IrrigationController
             {
                 appObj.RelayBoard.Begin();
             }
+        }
+
+        public void logQueueMessage(string queueMsg)
+        {
+            Run aNewRun = new Run();
+            aNewRun.foreground = blueVioletBrush;
+            aNewRun.Text = String.Format("Retrieved IoT Hub Message: {0} - {1}", queueMsg, DateTime.Now.ToString());
+
+            Paragraph myParagraph = new Paragraph();
+            myParagraph.InLines.Add(aNewRun);
         }
 
         private void ValveControlButton_Click(object sender, RoutedEventArgs e)

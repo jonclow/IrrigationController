@@ -80,13 +80,14 @@ namespace IrrigationController
         private void Timer_Tick(object sender, object e)
         {
             DateTime present = DateTime.Now;
-            List<string> tempTargets = new List<string>();
             foreach(Schedule sched in schedules)
             {
                 if (sched.IsSet)
                 {
-                    if (present >= sched.SchedStart)
+                    int timeResult = DateTime.Compare(present, sched.SchedStart);
+                    if (!timeResult < 0)
                     {
+                        List<string> tempTargets = new List<string>();
                         sched.SchedStart.AddDays(sched.SchedInterval);
                         foreach (string target in sched.targetAreas)
                         {
