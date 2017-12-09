@@ -20,7 +20,7 @@ namespace IrrigationController
         private double schedInterval;
 
         // Which solenoid valves to operate each time the schedule runs
-        public List<string> targetAreas;
+        private List<string> targetAreas = new List<string>();
 
         // How long do we run the pump per scheduled run
         private int waterDuration;
@@ -36,6 +36,7 @@ namespace IrrigationController
         public double SchedInterval { get => schedInterval; set => schedInterval = value; }
         public bool IsSet { get => isSet; set => isSet = value; }
         public int Id { get => id; set => id = value; }
+        public List<string> TargetAreas { get => targetAreas; set => targetAreas = value; }
 
         public void setSchedStart(TimeSpan userSelectedStart)
         {

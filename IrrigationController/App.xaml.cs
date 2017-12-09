@@ -47,7 +47,7 @@ namespace IrrigationController
                 schedules[sched] = new Schedule(false, sched+1);
             }
 
-            Array.Sort(schedules);
+            //Array.Sort(schedules);
 
             timer = new DispatcherTimer();
             timer.Interval = schedCheck;
@@ -85,11 +85,11 @@ namespace IrrigationController
                 if (sched.IsSet)
                 {
                     int timeResult = DateTime.Compare(present, sched.SchedStart);
-                    if (!timeResult < 0)
+                    if (timeResult >= 0)
                     {
                         List<string> tempTargets = new List<string>();
-                        sched.SchedStart.AddDays(sched.SchedInterval);
-                        foreach (string target in sched.targetAreas)
+                        sched.SchedStart = sched.SchedStart.AddDays(sched.SchedInterval);
+                        foreach (string target in sched.TargetAreas)
                         {
                             string where = target;
                             switch(where)

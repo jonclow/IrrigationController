@@ -154,5 +154,15 @@ namespace IrrigationController
                 return redBrush;
             }
         }
+
+        private void homeNavigate_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void scheduleNavigate_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ScheduleControl));
+        }
     }
 }

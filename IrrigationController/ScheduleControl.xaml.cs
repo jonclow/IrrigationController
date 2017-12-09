@@ -29,7 +29,9 @@ namespace IrrigationController
         private int targetSchedule = 0;
         private string whichSchedule;
 
-
+        private SolidColorBrush blueBrush = new SolidColorBrush(Windows.UI.Colors.Blue);
+        private SolidColorBrush grayBrush = new SolidColorBrush(Windows.UI.Colors.Gray);
+        private SolidColorBrush yellowBrush = new SolidColorBrush(Windows.UI.Colors.Yellow);
 
         public int IrrigateDuration { get => _irrigateDuration; set => _irrigateDuration = value; }
         public TimeSpan IrrigationStartTime { get => irrigationStartTime; set => irrigationStartTime = value; }
@@ -40,6 +42,71 @@ namespace IrrigationController
         {
             this.InitializeComponent();
             appObj = App.Current as App;
+
+            foreach (Schedule schedule in appObj.schedules)
+            {
+                SetButtonColour(schedule.Id, schedule.IsSet);
+            }
+            
+        }
+
+        private void SetButtonColour(int id, bool isSet)
+        {
+            switch (id)
+            {
+                case 0:
+                    IrrigationSched1.Background = isSet ? blueBrush : grayBrush;
+                    break;
+
+                case 1:
+                    IrrigationSched2.Background = isSet ? blueBrush : grayBrush;
+                    break;
+
+                case 2:
+                    IrrigationSched3.Background = isSet ? blueBrush : grayBrush;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void loadCurrentSchedData()
+        {
+            if (appObj.schedules[targetSchedule].IsSet)
+            {
+                foreach (string target in appObj.schedules[targetSchedule].TargetAreas)
+                {
+                    switch (target)
+                    {
+                        case "herbs":
+                            Herbs.IsChecked = true;
+                            break;
+
+                        case "orchard":
+                            Orchard.IsChecked = true;
+                            break;
+
+                        case "tunnelhouse":
+                            TunnelHouse.IsChecked = true;
+                            break;
+
+                        case "garden":
+                            Garden.IsChecked = true;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                TimeSpan userStart = appObj.schedules[targetSchedule].SchedStart.TimeOfDay;
+                timeStart.Time = userStart;
+
+                durationSlider.Value = appObj.schedules[targetSchedule].WaterDuration;
+
+                frequencySlider.Value = appObj.schedules[targetSchedule].SchedInterval;
+            }
         }
 
         private void durationSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -58,22 +125,22 @@ namespace IrrigationController
 
             if(Herbs.IsChecked == true)
             {
-                appObj.schedules[targetSchedule].targetAreas.Add("herbs");
+                appObj.schedules[targetSchedule].TargetAreas.Add("herbs");
             }
 
             if (Orchard.IsChecked == true)
             {
-                appObj.schedules[targetSchedule].targetAreas.Add("orchard");
+                appObj.schedules[targetSchedule].TargetAreas.Add("orchard");
             }
 
             if (TunnelHouse.IsChecked == true)
             {
-                appObj.schedules[targetSchedule].targetAreas.Add("tunnelhouse");
+                appObj.schedules[targetSchedule].TargetAreas.Add("tunnelhouse");
             }
 
             if (Garden.IsChecked == true)
             {
-                appObj.schedules[targetSchedule].targetAreas.Add("garden");
+                appObj.schedules[targetSchedule].TargetAreas.Add("garden");
             }
         }
 
@@ -94,14 +161,18 @@ namespace IrrigationController
             {
                 case "IrrigationSched1":
                     targetSchedule = 0;
+                    IrrigationSched1.Background = yellowBrush;
+                    loadCurrentSchedData();
                     break;
 
                 case "IrrigationSched2":
                     targetSchedule = 1;
+                    IrrigationSched2.Background = yellowBrush;
                     break;
 
                 case "IrrigationSched3":
                     targetSchedule = 2;
+                    IrrigationSched3.Background = yellowBrush;
                     break;
             }
         }
@@ -109,6 +180,16 @@ namespace IrrigationController
         private void scheduleCancel(object sender, RoutedEventArgs e)
         {
             appObj.schedules[targetSchedule].IsSet = false;
+        }
+
+        private void valveControlNavigate_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ValveControl));
+        }
+
+        private void homeNavigate_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
         }
     }
 }

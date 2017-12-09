@@ -9,8 +9,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="800" Height="480">
         <StackPanel HorizontalAlignment="Left" Height="90" Margin="580,20,0,0" VerticalAlignment="Top" Width="210" Orientation="Horizontal">
-            <Button Content="Home"  Margin="0,29,10,10" Height="51" Width="85"/>
-            <Button Content="Schedule" Margin="0,29,10,10.4" Height="51" Width="90"/>
+            <Button x:Name="homeNavigate" Content="Home"  Margin="0,29,10,10" Height="51" Width="85" Click="homeNavigate_Click"/>
+            <Button x:Name="scheduleNavigate" Content="Schedule" Margin="0,29,10,10.4" Height="51" Width="90" Click="scheduleNavigate_Click"/>
 
         </StackPanel>
         <StackPanel HorizontalAlignment="Left" Height="147" Margin="62,258,0,0" VerticalAlignment="Top" Width="620" Orientation="Horizontal">

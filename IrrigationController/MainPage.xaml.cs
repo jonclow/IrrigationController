@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Gpio;
+using Windows.UI.Xaml.Documents;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -39,11 +40,11 @@ namespace IrrigationController
         public void logQueueMessage(string queueMsg)
         {
             Run aNewRun = new Run();
-            aNewRun.foreground = blueVioletBrush;
+            //aNewRun.foreground = blueVioletBrush;
             aNewRun.Text = String.Format("Retrieved IoT Hub Message: {0} - {1}", queueMsg, DateTime.Now.ToString());
 
             Paragraph myParagraph = new Paragraph();
-            myParagraph.InLines.Add(aNewRun);
+            //myParagraph.InLines.Add(aNewRun);
         }
 
         private void ValveControlButton_Click(object sender, RoutedEventArgs e)
