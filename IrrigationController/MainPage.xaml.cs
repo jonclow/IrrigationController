@@ -39,12 +39,7 @@ namespace IrrigationController
 
         public void logQueueMessage(string queueMsg)
         {
-            Run aNewRun = new Run();
-            //aNewRun.foreground = blueVioletBrush;
-            aNewRun.Text = String.Format("Retrieved IoT Hub Message: {0} - {1}", queueMsg, DateTime.Now.ToString());
-
-            Paragraph myParagraph = new Paragraph();
-            //myParagraph.InLines.Add(aNewRun);
+            outputText.Text = String.Format("{0} --- {1}", queueMsg, DateTime.Now.ToString()); 
         }
 
         private void ValveControlButton_Click(object sender, RoutedEventArgs e)

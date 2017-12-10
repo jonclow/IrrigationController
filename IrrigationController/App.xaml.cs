@@ -9,6 +9,7 @@ using Windows.ApplicationModel.Background;
 using Windows.Devices.Gpio;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,9 +30,7 @@ namespace IrrigationController
         public Schedule[] schedules = new Schedule[3];
 
         private DispatcherTimer timer;
-        private TimeSpan schedCheck = new TimeSpan(0, 1, 0);
-
-
+        private TimeSpan schedCheck = new TimeSpan(0, 1, 0);        
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -44,10 +43,8 @@ namespace IrrigationController
 
             for (int sched = 0; sched < 3; sched++)
             {
-                schedules[sched] = new Schedule(false, sched+1);
+                schedules[sched] = new Schedule(false, sched);
             }
-
-            //Array.Sort(schedules);
 
             timer = new DispatcherTimer();
             timer.Interval = schedCheck;
@@ -64,8 +61,7 @@ namespace IrrigationController
             valveState.Add("TunnelHouse", false);
             valveState.Add("Garden", false);
 
-
-            // TODO: build out service to run in background task to check Azure IoT Hubb messaging
+            // TODO: build out service to run in background task to check Azure IoT Hub messaging
             var builder = new BackgroundTaskBuilder
             {
                 Name = "Hub Messaging"
@@ -128,7 +124,7 @@ namespace IrrigationController
                         watering.Tick += (s, ev) =>
                         {
                             watering.Stop();
-                            // If the valve is closed - dont re-open it.  The timer.tick should only close a valve.
+                            // If the valve is closed - dont re-open it.  The timer.Tick should only close a valve.
                             // The valve may have been manually closed after the timer was started
                             foreach (string target in tempTargets)
                             {

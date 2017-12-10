@@ -12,19 +12,19 @@
         <HyperlinkButton Content="Valve Control" Click="ValveControlButton_Click" 
                          HorizontalAlignment="Left" Margin="35,52,0,0" 
                          VerticalAlignment="Top" 
-                         Height="156" Width="320" 
+                         Height="156" Width="211" 
                          BorderBrush="Black" 
                          BorderThickness="2"
-                         Background="LawnGreen"/>
+                         Background="DeepSkyBlue"/>
         <HyperlinkButton Content="Schedule Control" Click="ScheduleControlButton_Click" 
                          HorizontalAlignment="Left" 
                          Margin="35,285,0,0" 
                          VerticalAlignment="Top" 
                          Height="156" 
-                         Width="320" 
+                         Width="211" 
                          BorderBrush="Black" 
                          BorderThickness="2"
                          Background="Orange"/>
-        <TextBox HorizontalAlignment="Left" Margin="399,52,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="389" Width="373" BorderBrush="Black" BorderThickness="2"/>
+        <TextBlock x:Name="outputText" HorizontalAlignment="Left" Margin="295,52,0,0" TextWrapping="Wrap" Text="Irrigation Control Monitoring" VerticalAlignment="Top" Height="389" Width="477" />
     </Grid>
 </Page>

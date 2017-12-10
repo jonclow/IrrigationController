@@ -166,17 +166,20 @@ namespace IrrigationController
             switch (whichSchedule)
             {
                 case "IrrigationSched1":
+                    SetButtonColour();
                     targetSchedule = 0;
                     IrrigationSched1.Background = yellowBrush;
                     loadCurrentSchedData();
                     break;
 
                 case "IrrigationSched2":
+                    SetButtonColour();
                     targetSchedule = 1;
                     IrrigationSched2.Background = yellowBrush;
                     break;
 
                 case "IrrigationSched3":
+                    SetButtonColour();
                     targetSchedule = 2;
                     IrrigationSched3.Background = yellowBrush;
                     break;
