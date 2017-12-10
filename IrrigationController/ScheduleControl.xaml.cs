@@ -43,32 +43,35 @@ namespace IrrigationController
             this.InitializeComponent();
             appObj = App.Current as App;
 
-            foreach (Schedule schedule in appObj.schedules)
-            {
-                SetButtonColour(schedule.Id, schedule.IsSet);
-            }
+            SetButtonColour();
             
         }
 
-        private void SetButtonColour(int id, bool isSet)
+        private void SetButtonColour()
         {
-            switch (id)
+            foreach (Schedule schedule in appObj.schedules)
             {
-                case 0:
-                    IrrigationSched1.Background = isSet ? blueBrush : grayBrush;
-                    break;
+                int id = schedule.Id;
+                bool isSet = schedule.IsSet;
+                switch (id)
+                {
+                    case 0:
+                        IrrigationSched1.Background = isSet ? blueBrush : grayBrush;
+                        break;
 
-                case 1:
-                    IrrigationSched2.Background = isSet ? blueBrush : grayBrush;
-                    break;
+                    case 1:
+                        IrrigationSched2.Background = isSet ? blueBrush : grayBrush;
+                        break;
 
-                case 2:
-                    IrrigationSched3.Background = isSet ? blueBrush : grayBrush;
-                    break;
+                    case 2:
+                        IrrigationSched3.Background = isSet ? blueBrush : grayBrush;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
+            
         }
 
         private void loadCurrentSchedData()
@@ -142,6 +145,9 @@ namespace IrrigationController
             {
                 appObj.schedules[targetSchedule].TargetAreas.Add("garden");
             }
+
+            SetButtonColour();
+
         }
 
         private void setTime(object sender, TimePickerValueChangedEventArgs e)
@@ -180,6 +186,7 @@ namespace IrrigationController
         private void scheduleCancel(object sender, RoutedEventArgs e)
         {
             appObj.schedules[targetSchedule].IsSet = false;
+            SetButtonColour();
         }
 
         private void valveControlNavigate_Click(object sender, RoutedEventArgs e)

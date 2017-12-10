@@ -40,10 +40,6 @@ namespace IrrigationController
         private SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
         private SolidColorBrush greenBrush = new SolidColorBrush(Windows.UI.Colors.Green);
 
-        //public Dictionary<string, bool> valveState = new Dictionary<string, bool>();
-
-        //private RelayBoard RelayBoard = new RelayBoard();
-
         private int _irrigateDuration;
     
         public int IrrigateDuration { get => _irrigateDuration; set => _irrigateDuration = value; }  
@@ -67,7 +63,6 @@ namespace IrrigationController
 
         private void HerbsButton_Click(object sender, RoutedEventArgs e)
         {
-            //var appObj = App.Current as App;
             appObj.valveState["Herbs"] = appObj.RelayBoard.SwitchRelay(appObj.RelayBoard.HerbPin);
             Herbs.Background = SetButtonColour("Herbs");
 
@@ -77,7 +72,6 @@ namespace IrrigationController
 
         private void OrchardButton_Click(object sender, RoutedEventArgs e)
         {
-            //var appObj = App.Current as App;
             appObj.valveState["Orchard"] = appObj.RelayBoard.SwitchRelay(appObj.RelayBoard.OrchardPin);
             Orchard.Background = SetButtonColour("Orchard");
 
@@ -116,7 +110,7 @@ namespace IrrigationController
                 timer.Tick += (s, ev) =>
                 {
                     timer.Stop();
-                    // If the valve is closed - dont re-open it.  The timer.tick should only close a valve (valveState = true).
+                    // If the valve is closed - dont re-open it.  The timer.Tick should only close a valve.
                     // The valve may have been manually closed after the timer was started
                     if (appObj.valveState[whichArea])
                     {
@@ -145,14 +139,8 @@ namespace IrrigationController
 
         private SolidColorBrush SetButtonColour(string button)
         {
-            if (appObj.valveState[button])
-            {
-                return greenBrush;
-            }
-            else
-            {
-                return redBrush;
-            }
+            SolidColorBrush returnValue = appObj.valveState[button] ? greenBrush : redBrush;
+            return returnValue;
         }
 
         private void homeNavigate_Click(object sender, RoutedEventArgs e)
